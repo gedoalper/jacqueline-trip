@@ -93,13 +93,13 @@ svg.i.s{width:17px;height:17px}
 .mapctl button{width:46px;height:46px;display:grid;place-items:center;border:0;background:none;color:var(--ink)}
 .mapctl button+button{border-top:1px solid var(--rule)}
 .mapctl button.on{color:var(--enamel)}
-.layerpop{position:absolute;z-index:950;right:calc(max(12px,env(safe-area-inset-right,0px)) + 56px);top:calc(env(safe-area-inset-top,0px) + 80px);padding:6px;display:grid;min-width:240px;max-width:calc(100vw - 100px);border-radius:16px;
+.layerpop{position:absolute;z-index:1150;max-height:calc(100dvh - 200px);overflow:auto;right:calc(max(12px,env(safe-area-inset-right,0px)) + 56px);top:calc(env(safe-area-inset-top,0px) + 80px);padding:6px;display:grid;min-width:240px;max-width:calc(100vw - 100px);border-radius:16px;
   background:var(--glass);-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--glass-line);box-shadow:var(--shadow)}
 .layerpop label{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 10px;font-size:15px;border-radius:10px}
-.layerpop input{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:13px;background:var(--surface-2);position:relative;flex:none;transition:background .2s}
-.layerpop input::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
-.layerpop input:checked{background:#34C759}
-.layerpop input:checked::after{transform:translateX(18px)}
+.layerpop input[type=checkbox]{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:13px;background:var(--surface-2);position:relative;flex:none;transition:background .2s}
+.layerpop input[type=checkbox]::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.layerpop input[type=checkbox]:checked{background:#34C759}
+.layerpop input[type=checkbox]:checked::after{transform:translateX(18px)}
 
 /* panel: bottom sheet on iPhone, floating side panel on Mac */
 .panel{position:absolute;z-index:1000;left:max(8px,env(safe-area-inset-left,0px));right:max(8px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 76px + var(--sy,40vh));bottom:calc(var(--tabbar) + env(safe-area-inset-bottom,0px) + 18px);
@@ -700,7 +700,7 @@ const worst=r=>r.msgs.some(m=>m.k==="bad")?"bad":r.msgs.some(m=>m.k==="warn")?"w
 
 /* ---------- state ---------- */
 const PACES = {crew:{n:2.4,b:3.0,ln:13,lw:17,label:"First-timers"},canalplan:{n:2.45,b:3.2,ln:11,lw:11,label:"Canalplan pace"}};
-const DEF = {route:"A",choice:{A:{},B:{}},over:{A:{},B:{}},pace:{...PACES.crew},day:0,tab:"today",wseg:"days",theme:"auto",layers:{canal:true,svc:false,sights:true,osm:true,labels:true},tfilter:"all",tall:false,svc:false,pq:"",pf:"top",pscope:"day",picks:{A:{},B:{}},base:"streets"};
+const DEF = {route:"A",choice:{A:{},B:{}},over:{A:{},B:{}},pace:{...PACES.crew},day:0,tab:"today",wseg:"days",theme:"auto",layers:{canal:true,quiet:true,svc:false,sights:true,osm:true,labels:true},tfilter:"all",tall:false,svc:false,pq:"",pf:"top",pscope:"day",picks:{A:{},B:{}},base:"streets"};
 let S = JSON.parse(JSON.stringify(DEF));
 try{const o=JSON.parse(localStorage.getItem("jacqueline.v1")||"null"); if(o&&o.choice) S=Object.assign(S,o,{layers:Object.assign({},DEF.layers,o.layers||{})});}catch(e){}
 const save=()=>{try{localStorage.setItem("jacqueline.v1",JSON.stringify(S))}catch(e){}};
@@ -1099,6 +1099,7 @@ function initMap(){
   $("#zme").onclick=startGPS;
   $("#zlay").onclick=()=>{const p=$("#layerpop"); p.hidden=!p.hidden; $("#zlay").setAttribute("aria-expanded",!p.hidden); renderLayerPop();};
   buildCanalMarkers(); buildSights(); drawRoute(); setBase();
+  if(!hasKey()){ setTimeout(()=>{ if(!isDesk()) snap("peek");const lp=$("#layerpop"); lp.hidden=false; $("#zlay").setAttribute("aria-expanded","true"); renderLayerPop();},900);}
   {const g=L.layerGroup(); Object.keys(QUIET).forEach(q=>{const n=byName(q); if(!n)return; const m=L.marker([n.lat,n.lon],{pane:"marks",title:"Quiet mooring: "+q,icon:L.divIcon({className:"mk quiet",html:`<span class="v"><svg><use href="#i-moon"/></svg></span>`,iconSize:[40,40],iconAnchor:[20,20]})}); m.on("click",e=>{L.DomEvent.stopPropagation(e);openCard({type:"node",id:n.id});}); m.addTo(g);}); LAYERS.quiet=g;}
   fetch("data/basemap.json").then(r=>r.json()).then(j=>{BASE=j;buildBase();styleMap();}).catch(()=>toast("Base map data did not load. The canal and plan still work."));
   fetch("data/osmpois.json").then(r=>r.json()).then(j=>{OSM=j;buildOsm();buildLabels();zoomVis();if(S.tab==="places"||CARD)renderPanel();}).catch(()=>{});
@@ -1138,6 +1139,8 @@ window.addEventListener("offline",()=>{if(TILES){setBase();}}); window.addEventL
 function renderLayerPop(){const p=$("#layerpop"); const L2=[["canal","Locks, bridges, moorings, turning places"],["quiet","Quiet countryside moorings"],["svc","Water and services"],["sights","Researched sights"],["osm","Shops, pubs and cafes (OpenStreetMap)"],["labels","Town and village names"]];
   const BS=hasKey()?[["streets","Map"],["outdoor","Outdoor"],["satellite","Satellite"],["builtin","Built-in"]]:[];
   p.innerHTML=(BS.length?`<div class="seg" style="margin:4px 4px 6px">${BS.map(([k,l])=>`<button data-base="${k}" aria-pressed="${S.base===k}">${l}</button>`).join("")}</div>`:"")+L2.map(([k,l])=>`<label><span>${l}</span><input type="checkbox" data-ly="${k}" ${S.layers[k]?"checked":""}></label>`).join("");
+  if(!hasKey()) p.insertAdjacentHTML("afterbegin",`<div style="display:grid;gap:8px;padding:8px 6px 10px;border-bottom:1px solid var(--rule);margin-bottom:4px"><b style="font-size:15px">Detailed map</b><span class="cap">Paste your free MapTiler key to switch on the detailed map, outdoor footpaths and satellite. It stays on this device only.</span><div style="display:grid;gap:8px"><input class="search" id="mkey2" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="MapTiler key" aria-label="MapTiler key"><button class="btn primary" id="mkeysave2">Save</button></div></div>`);
+  const ks=p.querySelector("#mkeysave2"); if(ks) ks.onclick=()=>{const v=p.querySelector("#mkey2").value.trim(); if(!/^[A-Za-z0-9]{10,64}$/.test(v)){toast("That does not look like a MapTiler key.");return;} try{localStorage.setItem("jacqueline.mapkey",v);}catch(e){} S.base="streets"; save(); setBase(); toast("Map key saved on this device."); renderLayerPop();};
   p.querySelectorAll("[data-base]").forEach(x=>x.onclick=()=>{S.base=x.dataset.base;save();setBase();renderLayerPop();});
   p.querySelectorAll("[data-ly]").forEach(x=>x.onchange=()=>{S.layers[x.dataset.ly]=x.checked;save();zoomVis();});}
 function weekBounds(){const pts=[];RES.forEach(r=>r.seq.forEach(id=>{const n=BYID[id];pts.push([n.lat,n.lon]);}));return L.latLngBounds(pts);}
