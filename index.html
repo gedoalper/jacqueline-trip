@@ -323,6 +323,8 @@ table.rt .warnc{color:var(--warn);font-weight:600}
 .mk.quiet .v{width:24px;height:24px;background:#2E7D5B}
 
 @media (max-width:420px){.routepick button{padding:10px;min-height:58px}.routepick button span{font-size:12px;line-height:15px}.compare>button{padding:10px}.compare .k{font-size:13px}}
+/* The selection ring and GPS circle are drawn on canvases above the markers; never let those canvases take taps. */
+.leaflet-selm-pane canvas,.leaflet-sel-pane canvas{pointer-events:none}
 </style>
 
 <div class="shell" id="shell">
