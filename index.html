@@ -557,8 +557,8 @@ const ROUTES = {
      {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
      {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]}
   ]},
- D:{id:"D",name:"Route D",title:"A north morning, then south",lede:"Made for a 2 pm handover. Tuesday a short run north to Newbold. Wednesday an early start past All Oaks Wood to turn at the Stretton Arm, back through Hillmorton before 14:00 to the fields below Barby Hill. Then Route C's south: the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and home. Hawkesbury stays out of reach.",
-  days:[D("14:30",0,[],"Newbold Visitor Moorings (48 hour)"),D("07:00",20,["Stretton Arm Winding Hole"],"Roys Bridge No 87"),D("08:00",30,[],"Kayes Arm Junction"),D("08:00",45,[],"Napton Winding Hole"),D("07:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("07:10",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
+ D:{id:"D",name:"Route D",title:"A north morning, then south",lede:"Made for a 2 pm handover. Tuesday a short run north to Newbold. Wednesday an early start past All Oaks Wood to turn at the Stretton Arm, back through Hillmorton before 14:00 to the fields below Barby Hill. Then south: the Calcutt and Stockton locks to Long Itchington, a night by Wolfhampcote's lost village, the Braunston flight and tunnel with the Leicester line, and home. Hawkesbury stays out of reach.",
+  days:[D("14:30",0,[],"Newbold Visitor Moorings (48 hour)"),D("07:00",20,["Stretton Arm Winding Hole"],"Roys Bridge No 87"),D("08:00",30,[],"Kayes Arm Junction"),D("08:00",45,[],"Wolfamcote Winding Hole"),D("08:00",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("07:10",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
   groups:[
    {id:"d1",day:1,q:"Wednesday in the north",opts:[
      {id:"base",label:"Turn at the Stretton Arm",d:"Past Lime Farm and All Oaks Wood to Stretton Stop, then back. A long day: away at first light, through Hillmorton before 14:00."},
@@ -566,6 +566,9 @@ const ROUTES = {
    {id:"d2",day:1,q:"Wednesday night",opts:[
      {id:"base",label:"Fields below Barby Hill",d:"Roys bridge 87, quiet farmland before Braunston. Moors before dusk after a long day."},
      {id:"braun",label:"Braunston village",d:"Pubs, church and shops. About half an hour further, so you arrive close to sunset.",patch:{1:{night:"Braunston Visitor Moorings (London Road)"},2:{start:"08:15"}}}]},
+   {id:"d5",day:3,q:"Friday night",opts:[
+     {id:"base",label:"Wolfhampcote, the lost village",d:"Fields by the deserted medieval village and its lone church. A shorter Saturday."},
+     {id:"napton",label:"Napton Hill instead",d:"Windmill view, the Folly pub, village shop. Saturday starts earlier and ends about 15:20.",patch:{3:{night:"Napton Winding Hole"},4:{start:"07:30"}}}]},
    {id:"d3",day:4,q:"Saturday after the tunnel",opts:[
      {id:"base",label:"Leicester line to Watford and back",d:"About 4 extra miles of wooded, quiet water."},
      {id:"skip",label:"Stop at Norton Junction",d:"A shorter day; walk to the New Inn.",patch:{4:{via:[]}}}]},
