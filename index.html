@@ -143,7 +143,7 @@ svg.i.s{width:17px;height:17px}
 .seg{display:flex;padding:3px;gap:2px;border-radius:12px;background:var(--surface-2)}
 .seg button{flex:1;min-height:36px;border:0;background:none;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-2);padding:0 8px}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.14)}
-.routepick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.routepick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .routepick button{text-align:left;border:1.5px solid transparent;border-radius:16px;background:var(--glass-2);padding:12px 14px;min-height:64px;display:grid;gap:3px;align-content:start}
 .routepick button b{font-size:16px;font-weight:700}
 .routepick button span{font-size:13px;color:var(--ink-2);line-height:17px}
@@ -236,7 +236,7 @@ details>summary::-webkit-details-marker{display:none}
 .daysrow .dn{font-weight:700;font-size:15px;line-height:1.15}
 .daysrow .tr{font-size:15px;line-height:20px;min-width:0}
 .daysrow .fg{font-size:13px;color:var(--ink-2);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .compare>button{background:var(--glass-2);padding:14px;min-width:0;border:1.5px solid transparent;border-radius:18px;text-align:left;display:grid;gap:4px;align-content:start}
 .compare b{font-size:17px;font-weight:700}
 .compare .k{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -280,7 +280,7 @@ table.rt .warnc{color:var(--warn);font-weight:600}
 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
 .phones div{border-radius:16px;padding:12px 14px;background:var(--glass-2)}
 .phones b{font-size:20px;font-weight:700;user-select:all;display:block;font-variant-numeric:tabular-nums}
-.snack{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--tabbar) + env(safe-area-inset-bottom,0px) + 22px);z-index:2000;border-radius:16px;min-height:48px;display:flex;align-items:center;gap:12px;padding:0 6px 0 16px;max-width:calc(100vw - 32px);font-size:15px;
+.snack{position:fixed;left:50%;transform:translateX(-50%);white-space:nowrap;min-width:min(320px,calc(100vw - 32px));justify-content:space-between;bottom:calc(var(--tabbar) + env(safe-area-inset-bottom,0px) + 22px);z-index:2000;border-radius:16px;min-height:48px;display:flex;align-items:center;gap:12px;padding:0 6px 0 16px;max-width:calc(100vw - 32px);font-size:15px;
   background:rgba(30,30,32,.86);color:#fff;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .snack button{min-height:40px;border:0;background:none;color:#64A8FF;font-weight:600}
 @media (min-width:768px){.snack{bottom:20px}}
@@ -321,6 +321,8 @@ table.rt .warnc{color:var(--warn);font-weight:600}
 .nodeic.lock::before{content:"";width:8px;height:8px;border-left:2px solid #fff;border-right:2px solid #fff}
 .nodeic.quiet{background:#2E7D5B;border-color:#2E7D5B;color:#fff}
 .mk.quiet .v{width:24px;height:24px;background:#2E7D5B}
+
+@media (max-width:420px){.routepick button{padding:10px;min-height:58px}.routepick button span{font-size:12px;line-height:15px}.compare>button{padding:10px}.compare .k{font-size:13px}}
 </style>
 
 <div class="shell" id="shell">
@@ -538,6 +540,22 @@ const ROUTES = {
    {id:"b7",day:1,q:"Where you sleep",opts:[
      {id:"base",label:"As planned",d:"Newbold, Wolfhampcote, Norton Junction and Napton."},
      {id:"wild",label:"Countryside nights",d:"Wednesday by All Oaks Wood, Friday in the fields below Braunston tunnel, Saturday at Roys bridge 87 between Barby and Braunston. Thursday at Wolfhampcote is already out in the fields.",patch:{1:{night:"All Oaks Corner"},3:{night:"Thrupp Covert Bridge No 7"},4:{night:"Roys Bridge No 87"}}}]}
+ ]},
+ C:{id:"C",name:"Route C",title:"South only: woods, locks and Napton",lede:"Straight south through Hillmorton: a countryside night near Barby, the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and Wolfhampcote. Needs a noon handover today, or use the 2 pm version.",
+  days:[D("12:00",0,[],"Roys Bridge No 87"),D("08:00",30,[],"Kayes Arm Junction"),D("07:30",30,[],"Napton Winding Hole"),D("08:00",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("08:00",30,[],"Wolfamcote Winding Hole"),D("08:00",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
+  groups:[
+   {id:"c1",day:0,q:"Tuesday: when do you get away?",opts:[
+     {id:"base",label:"About noon: through Hillmorton by 14:00",d:"First night in the fields at Roys bridge 87, between Barby and Braunston."},
+     {id:"two",label:"About 2 pm: a short hop north first",d:"Hillmorton will have closed. Up the Rugby arm to turn, night by Tesco; Wednesday south to Wolfhampcote. Drops the Leicester line.",patch:{0:{start:"14:15",via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},1:{start:"08:15",night:"Wolfamcote Winding Hole"},2:{start:"07:45",night:"Kayes Arm Junction"},3:{start:"07:30",via:[],night:"Napton Winding Hole"},4:{start:"08:00",via:[],night:"Norton Junction"},5:{start:"07:10"}}}]},
+   {id:"c2",day:0,q:"Tuesday night (noon handover)",opts:[
+     {id:"base",label:"Countryside at Roys bridge 87",d:"Quiet fields, no village."},
+     {id:"braun",label:"Braunston village",d:"Pubs and shops; you arrive close to dusk.",patch:{0:{night:"Braunston Visitor Moorings (London Road)"}}}]},
+   {id:"c3",day:4,q:"Saturday night",opts:[
+     {id:"base",label:"Wolfhampcote, in the fields",d:"Lost village and lone church; an easy Sunday home."},
+     {id:"napton",label:"Napton Hill again",d:"The Folly and the windmill view; a longer Sunday.",patch:{4:{night:"Napton Winding Hole"},5:{start:"07:15"}}}]},
+   {id:"c4",day:5,q:"Sunday",opts:[
+     {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
+     {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]}
   ]}
 };
 /* Quiet countryside moorings, scored from OpenStreetMap: distance from built-up areas, main roads and railways, nearby woods, and Canalplan users' mooring ratings. Moor on the towpath side, not on a bend, under a bridge or at a lock. */
@@ -689,6 +707,7 @@ function simulate(days, pace){
     if(di===0&&startT<840) msgs.push({k:"info",lead:"Needs an early handover",t:"Clifton's website says boats go out after 14:00. Ask them for "+d.start+"."});
     if(replanned) msgs.unshift({k:"info",lead:"Replanned from "+d.from,t:"Starting at "+d.start+"."});
     if(!ok) msgs.push({k:"bad",lead:"No route to a stop",t:""});
+    if(di<6&&meters===0) msgs.push({k:"warn",lead:"No cruising today",t:"The night stop is where you already are. Pick another night stop or a different variation."});
     flightLog.forEach(x=>msgs.push({k:"ok",lead:x.f.name+": in at "+fmt(x.t),t:x.r.last<2000?"Window "+fmt(x.r.open)+" to "+fmt(x.r.last)+" last entry.":"Open."}));
     const order={bad:0,warn:1,info:2,ok:3}; msgs.sort((a,b)=>order[a.k]-order[b.k]);
     res.push({di,seq,steps,meters,locks,cruise,wait,startT,arrive,msgs,turns,night:d.night,start:d.start,via:d.via||[]});
@@ -700,9 +719,10 @@ const worst=r=>r.msgs.some(m=>m.k==="bad")?"bad":r.msgs.some(m=>m.k==="warn")?"w
 
 /* ---------- state ---------- */
 const PACES = {crew:{n:2.4,b:3.0,ln:13,lw:17,label:"First-timers"},canalplan:{n:2.45,b:3.2,ln:11,lw:11,label:"Canalplan pace"}};
-const DEF = {route:"A",choice:{A:{},B:{}},over:{A:{},B:{}},pace:{...PACES.crew},day:0,tab:"today",wseg:"days",theme:"auto",layers:{canal:true,quiet:true,svc:false,sights:true,osm:true,labels:true},tfilter:"all",tall:false,svc:false,pq:"",pf:"top",pscope:"day",picks:{A:{},B:{}},base:"streets"};
+const DEF = {route:"A",choice:{A:{},B:{},C:{}},over:{A:{},B:{},C:{}},pace:{...PACES.crew},day:0,tab:"today",wseg:"days",theme:"auto",layers:{canal:true,quiet:true,svc:false,sights:true,osm:true,labels:true},tfilter:"all",tall:false,svc:false,pq:"",pf:"top",pscope:"day",picks:{A:{},B:{},C:{}},base:"streets"};
 let S = JSON.parse(JSON.stringify(DEF));
 try{const o=JSON.parse(localStorage.getItem("jacqueline.v1")||"null"); if(o&&o.choice) S=Object.assign(S,o,{layers:Object.assign({},DEF.layers,o.layers||{})});}catch(e){}
+["choice","over","picks"].forEach(k=>{S[k]=S[k]||{}; Object.keys(ROUTES).forEach(r=>{S[k][r]=S[k][r]||{};});});
 const save=()=>{try{localStorage.setItem("jacqueline.v1",JSON.stringify(S))}catch(e){}};
 let CARD=null, PLAN=null, RES=null, OSM={places:[],pois:[]}, BASE=null;
 const $=s=>document.querySelector(s);
@@ -789,7 +809,7 @@ function renderPanel(){const b=$("#pbody"); const wide=S.tab==="table"&&!CARD&&i
   if(CARD){b.innerHTML=cardHTML(); bindCard(); return;}
   const v={map:viewMap,today:viewToday,week:viewWeek,table:viewTable,places:viewPlaces,info:viewInfo}[S.tab]||viewToday; v(b);}
 function msgHTML(m){return `<div class="msg ${m.k}">${ico(m.k==="ok"?"check":m.k==="bad"?"stop":m.k==="warn"?"warn":"clock")}<b>${esc(m.lead)}</b>${m.t?`<span>${esc(m.t)}</span>`:""}</div>`;}
-function routePicker(){return `<div class="routepick">${["A","B"].map(k=>{const R=ROUTES[k];return `<button data-route="${k}" aria-pressed="${S.route===k}"><b>${R.name}</b><span>${esc(R.title)}</span></button>`}).join("")}</div>`;}
+function routePicker(){return `<div class="routepick">${Object.keys(ROUTES).map(k=>{const R=ROUTES[k];return `<button data-route="${k}" aria-pressed="${S.route===k}"><b>${R.name}</b><span>${esc(R.title)}</span></button>`}).join("")}</div>`;}
 function bindRoutePicker(b){b.querySelectorAll("[data-route]").forEach(x=>x.onclick=()=>{if(S.route===x.dataset.route)return; change("Switched to "+ROUTES[x.dataset.route].name,()=>{S.route=x.dataset.route;}); fitWeek();});}
 function daySel(){return `<div class="days" role="group" aria-label="Day">${RES.map((r,i)=>{const w=worst(r);return `<button class="dayb" data-day="${i}" aria-pressed="${S.day===i}"><span class="dw">${DSHORT[i][0]}</span><span class="dd">${DSHORT[i][1]}</span>${w!=="ok"?`<span class="dot ${w}"></span>`:""}</button>`}).join("")}</div>`;}
 function bindDaySel(b){b.querySelectorAll("[data-day]").forEach(x=>x.onclick=()=>{S.day=+x.dataset.day;save();refresh();fitDay(S.day);});}
@@ -889,7 +909,7 @@ function viewWeek(b){const seg=S.wseg;
   b.querySelectorAll("[data-seg]").forEach(x=>x.onclick=()=>{S.wseg=x.dataset.seg;save();renderPanel();});
   const w=$("#wbody");
   if(seg==="days"){
-    const both=["A","B"].map(k=>({k,t:totals(simulate(planFor(k),S.pace))}));
+    const both=Object.keys(ROUTES).map(k=>({k,t:totals(simulate(planFor(k),S.pace))}));
     w.innerHTML=`<div class="compare">${both.map(x=>`<button data-route="${x.k}" aria-pressed="${x.k===S.route}"><b>${ROUTES[x.k].name}</b><span class="cap">${esc(ROUTES[x.k].title)}</span><span class="k">${mi(x.t.m)} mi · ${x.t.l} locks</span><span class="k">${dur(x.t.c)} cruising</span><span class="tag ${x.t.bad?"not":"ok"}">${x.t.bad?x.t.bad+" problem"+(x.t.bad>1?"s":""):"All days fit"}${x.t.warn?" · "+x.t.warn+" to check":""}</span></button>`).join("")}</div>
      <p class="muted">${esc(ROUTES[S.route].lede)}</p>
      <div class="list">${RES.map((r,i)=>{const w2=worst(r);return `<button class="daysrow" data-day="${i}"><span class="dn">${DSHORT[i][0]}<br>${DSHORT[i][1]}</span><span class="tr"><b>${esc(shortName(r.night))}</b><span class="cap" style="display:block">${PLAN[i].via.length?"via "+esc(PLAN[i].via.map(shortName).join(", ")):"&nbsp;"}</span>${w2!=="ok"?`<span class="tag not">${w2==="bad"?"problem":"check"}</span>`:""}${S.over[S.route][i]?` <span class="tag ok">changed</span>`:""}</span><span class="fg">${mi(r.meters)} mi · ${r.locks} L<br>${dur(r.cruise)} · ${fmt(r.arrive)}</span></button>`}).join("")}</div>`;
@@ -910,7 +930,7 @@ function viewWeek(b){const seg=S.wseg;
     w.querySelectorAll("[data-pace]").forEach(x=>x.onclick=()=>change("Pace set",()=>{const p=PACES[x.dataset.pace];S.pace={n:p.n,b:p.b,ln:p.ln,lw:p.lw};}));
     w.querySelectorAll("[data-pk]").forEach(x=>x.onclick=()=>change("Pace changed",()=>{const k=x.dataset.pk;S.pace[k]=Math.max(0.5,Math.round((S.pace[k]+(+x.dataset.pd))*10)/10);}));
     w.querySelectorAll("[data-pi]").forEach(x=>x.onchange=()=>{const v=parseFloat(x.value);if(v>0)change("Pace changed",()=>{S.pace[x.dataset.pi]=v;});});
-    $("#resetall").onclick=()=>change("Cleared all day changes",()=>{S.over={A:{},B:{}};});
+    $("#resetall").onclick=()=>change("Cleared all day changes",()=>{S.over={A:{},B:{},C:{}};});
   }
 }
 
@@ -1093,7 +1113,7 @@ function initMap(){
   L_={}; ["land","built","wood","water","rail","roads","casing","canal","route","sel","osmp"].forEach(p=>L_[p]=L.canvas({pane:p,padding:0.3,tolerance:8}));
   MAP.fitBounds(weekBounds(),padOpts());
   MAP.on("zoomend",()=>{styleMap();zoomVis();});
-  MAP.on("click",()=>{if(CARD){CARD=null;clearSel();renderPanel();}});
+  MAP.on("click",()=>{const lp=$("#layerpop"); if(!lp.hidden){lp.hidden=true;$("#zlay").setAttribute("aria-expanded","false");return;} if(CARD){CARD=null;clearSel();renderPanel();}});
   $("#zin").onclick=()=>MAP.zoomIn(); $("#zout").onclick=()=>MAP.zoomOut();
   $("#zday").onclick=()=>fitDay(S.day); $("#zall").onclick=fitWeek;
   $("#zme").onclick=startGPS;
@@ -1139,7 +1159,8 @@ window.addEventListener("offline",()=>{if(TILES){setBase();}}); window.addEventL
 function renderLayerPop(){const p=$("#layerpop"); const L2=[["canal","Locks, bridges, moorings, turning places"],["quiet","Quiet countryside moorings"],["svc","Water and services"],["sights","Researched sights"],["osm","Shops, pubs and cafes (OpenStreetMap)"],["labels","Town and village names"]];
   const BS=hasKey()?[["streets","Map"],["outdoor","Outdoor"],["satellite","Satellite"],["builtin","Built-in"]]:[];
   p.innerHTML=(BS.length?`<div class="seg" style="margin:4px 4px 6px">${BS.map(([k,l])=>`<button data-base="${k}" aria-pressed="${S.base===k}">${l}</button>`).join("")}</div>`:"")+L2.map(([k,l])=>`<label><span>${l}</span><input type="checkbox" data-ly="${k}" ${S.layers[k]?"checked":""}></label>`).join("");
-  if(!hasKey()) p.insertAdjacentHTML("afterbegin",`<div style="display:grid;gap:8px;padding:8px 6px 10px;border-bottom:1px solid var(--rule);margin-bottom:4px"><b style="font-size:15px">Detailed map</b><span class="cap">Paste your free MapTiler key to switch on the detailed map, outdoor footpaths and satellite. It stays on this device only.</span><div style="display:grid;gap:8px"><input class="search" id="mkey2" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="MapTiler key" aria-label="MapTiler key"><button class="btn primary" id="mkeysave2">Save</button></div></div>`);
+  if(!hasKey()) p.insertAdjacentHTML("afterbegin",`<div style="display:grid;gap:8px;padding:8px 6px 10px;border-bottom:1px solid var(--rule);margin-bottom:4px"><b style="font-size:15px">Detailed map</b><span class="cap">Paste your free MapTiler key to switch on the detailed map, outdoor footpaths and satellite. It stays on this device only.</span><div style="display:grid;gap:8px"><input class="search" id="mkey2" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="MapTiler key" aria-label="MapTiler key"><button class="btn primary" id="mkeysave2">Save</button><button class="btn" id="mkeylater">Not now</button></div></div>`);
+  const kl=p.querySelector("#mkeylater"); if(kl) kl.onclick=()=>{p.hidden=true; $("#zlay").setAttribute("aria-expanded","false");};
   const ks=p.querySelector("#mkeysave2"); if(ks) ks.onclick=()=>{const v=p.querySelector("#mkey2").value.trim(); if(!/^[A-Za-z0-9]{10,64}$/.test(v)){toast("That does not look like a MapTiler key.");return;} try{localStorage.setItem("jacqueline.mapkey",v);}catch(e){} S.base="streets"; save(); setBase(); toast("Map key saved on this device."); renderLayerPop();};
   p.querySelectorAll("[data-base]").forEach(x=>x.onclick=()=>{S.base=x.dataset.base;save();setBase();renderLayerPop();});
   p.querySelectorAll("[data-ly]").forEach(x=>x.onchange=()=>{S.layers[x.dataset.ly]=x.checked;save();zoomVis();});}

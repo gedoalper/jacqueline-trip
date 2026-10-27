@@ -1,5 +1,5 @@
 /* Offline cache: serve from cache, refresh in the background. Version changes on every build. */
-const V = "jacq-8dddd1cabd";
+const V = "jacq-bb40eaf018";
 const PRE = ["./", "index.html", "data/basemap.json", "data/osmpois.json", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(PRE)).then(() => self.skipWaiting())); });
