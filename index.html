@@ -517,31 +517,31 @@ const ROUTES = {
      {id:"base",label:"Villages and pubs, as planned",d:"Newbold, Braunston, Long Itchington and Napton: a pub within a short walk most nights."},
      {id:"wild",label:"Countryside nights",d:"Wednesday by All Oaks Wood, Thursday in the fields at Nethercote, Saturday at Chambers bridge 100. Quiet, dark skies, no road or railway nearby. Eat on board or walk to a pub earlier.",patch:{1:{night:"All Oaks Corner"},2:{night:"Site of Nethercote Railway Bridge"},4:{night:"Chambers Bridge No 100"}}}]}
   ]},
- B:{id:"B",name:"Route B",title:"Lost village, tunnel and Leicester line",lede:"West to Hawkesbury and back, then Wolfhampcote's lost village, the Braunston flight and tunnel, the quiet Leicester line, and Napton Hill.",
-  days:[D("12:00",0,[],"Ansty Visitor Moorings"),D("07:30",30,["Wyken Arm Junction"],"Newbold Visitor Moorings (48 hour)"),D("08:20",30,[],"Wolfamcote Winding Hole"),D("08:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("08:00",30,[],"Napton Winding Hole"),D("07:15",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
+ B:{id:"B",name:"Route B",title:"Lost village, tunnel and Leicester line",lede:"Made for a 2 pm handover, with the fewest locks. North to the Wyken Arm by Hawkesbury and the Stretton Arm, a night in All Oaks Wood, Wolfhampcote's lost village, the Braunston flight and tunnel, the quiet Leicester line to Watford, a look at Calcutt, Napton Hill, and the Rugby arm on the way home.",
+  days:[D("14:30",0,[],"Newbold Visitor Moorings (48 hour)"),D("07:30",30,["Wyken Arm Junction","Stretton Arm Winding Hole"],"All Oaks Visitor Moorings"),D("07:30",30,[],"Wolfamcote Winding Hole"),D("08:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("08:00",30,["Calcutt Top Lock Winding Hole"],"Napton Winding Hole"),D("07:15",20,["Rugby Wharf Winding Hole"],"Rugby Visitor Moorings"),D("08:30",0,[],"Clifton Wharf")],
   groups:[
    {id:"b1",day:0,q:"Tuesday: when do you get away?",opts:[
-     {id:"base",label:"About noon: Ansty",d:"Ask Clifton for a noon handover."},
-     {id:"two",label:"About 2 pm: All Oaks Wood",d:"Clifton's normal time.",patch:{0:{start:"14:15",night:"All Oaks Visitor Moorings"}}},
-     {id:"late",label:"After 3 pm: Newbold",d:"One hour.",patch:{0:{start:"15:15",night:"Newbold Visitor Moorings (48 hour)"},1:{via:["Wyken Arm Junction"],night:"All Oaks Visitor Moorings"},2:{start:"07:30"}}}]},
-   {id:"b2",day:1,q:"Wednesday in the west",opts:[
-     {id:"base",label:"Turn at the Wyken Arm, back to Newbold",d:"Walk to Hawkesbury Junction."},
-     {id:"stretton",label:"Add the Stretton Arm",d:"Farm shop and butcher listed nearby.",patch:{1:{via:["Wyken Arm Junction","Stretton Arm Winding Hole"]}}}]},
+     {id:"base",label:"About 2 pm: Newbold",d:"Clifton's normal time. One hour north. Barley Mow and Newbold Quarry."},
+     {id:"noon",label:"About noon: Ansty",d:"Ask Clifton for a noon handover. Rose and Castle pub. Wednesday then ends back at Newbold.",patch:{0:{start:"12:00",night:"Ansty Visitor Moorings"},1:{night:"Newbold Visitor Moorings (48 hour)"},2:{start:"08:20"}}}]},
+   {id:"b2",day:1,q:"Wednesday in the north",opts:[
+     {id:"base",label:"Wyken Arm and the Stretton Arm",d:"Turn at the Wyken Arm and walk to Hawkesbury Junction and the Greyhound. On the way back, up the Stretton Arm: farm shop and butcher nearby."},
+     {id:"skip",label:"Wyken Arm only",d:"A little shorter.",patch:{1:{via:["Wyken Arm Junction"]}}}]},
    {id:"b3",day:2,q:"Thursday night",opts:[
      {id:"base",label:"Wolfhampcote, in the fields",d:"Excellent rural mooring by the lost village."},
      {id:"braunston",label:"Braunston village",d:"Pubs, church and shops.",patch:{2:{night:"Braunston Visitor Moorings (London Road)"}}}]},
    {id:"b4",day:3,q:"Friday after the tunnel",opts:[
      {id:"base",label:"Leicester line to Watford and back",d:"About 4 extra miles of quiet water."},
      {id:"skip",label:"Stop at Norton Junction",d:"Shorter day; walk to the New Inn.",patch:{3:{via:[]}}}]},
-   {id:"b5",day:4,q:"Saturday night",opts:[
-     {id:"base",label:"Napton Hill",d:"Windmill view, the Folly pub, village shop."},
-     {id:"wolf",label:"Back to Wolfhampcote",d:"Quieter; a shorter day.",patch:{4:{night:"Wolfamcote Winding Hole"},5:{start:"07:45"}}}]},
+   {id:"b5",day:4,q:"Saturday",opts:[
+     {id:"base",label:"Look at Calcutt, then Napton Hill",d:"Turn at the top of Calcutt locks, then moor below Napton. Windmill view, the Folly pub, village shop."},
+     {id:"napton",label:"Straight to Napton Hill",d:"Skip the Calcutt turn.",patch:{4:{via:[]}}},
+     {id:"wolf",label:"Back to Wolfhampcote",d:"Quieter; a shorter day.",patch:{4:{via:[],night:"Wolfamcote Winding Hole"},5:{start:"07:45"}}}]},
    {id:"b6",day:5,q:"Sunday",opts:[
-     {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
-     {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Past the yard, up the short arm to turn, last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]},
+     {id:"base",label:"Home, then the Rugby Wharf Arm",d:"Through Hillmorton before 14:00, past the yard, up the short arm to turn, last night at Rugby moorings by Tesco. Leave at 08:30 on Monday."},
+     {id:"home",label:"Home to Clifton",d:"Through Hillmorton before 14:00, moor near the yard.",patch:{5:{via:[],night:"Clifton Wharf"},6:{start:"08:45"}}}]},
    {id:"b7",day:1,q:"Where you sleep",opts:[
-     {id:"base",label:"As planned",d:"Newbold, Wolfhampcote, Norton Junction and Napton."},
-     {id:"wild",label:"Countryside nights",d:"Wednesday by All Oaks Wood, Friday in the fields below Braunston tunnel, Saturday at Roys bridge 87 between Barby and Braunston. Thursday at Wolfhampcote is already out in the fields.",patch:{1:{night:"All Oaks Corner"},3:{night:"Thrupp Covert Bridge No 7"},4:{night:"Roys Bridge No 87"}}}]}
+     {id:"base",label:"As planned",d:"Newbold, All Oaks Wood, Wolfhampcote, Norton Junction, Napton and Rugby."},
+     {id:"wild",label:"Countryside nights",d:"Wednesday at All Oaks Corner, Friday in the fields below Braunston tunnel, Saturday at Roys bridge 87 between Barby and Braunston.",patch:{1:{night:"All Oaks Corner"},3:{night:"Thrupp Covert Bridge No 7"},4:{night:"Roys Bridge No 87"}}}]}
  ]},
  C:{id:"C",name:"Route C",title:"South only: most ground",lede:"Made for a 2 pm handover. A short hop to turn at the Rugby arm, then south: a countryside night at Nethercote, the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and home. About 55 miles and 40 locks.",
   days:[D("14:30",0,["Rugby Wharf Winding Hole"],"Rugby Visitor Moorings"),D("08:15",30,[],"Site of Nethercote Railway Bridge"),D("08:00",30,[],"Kayes Arm Junction"),D("08:00",45,[],"Napton Winding Hole"),D("07:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("07:10",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
