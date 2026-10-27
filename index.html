@@ -541,18 +541,18 @@ const ROUTES = {
      {id:"base",label:"As planned",d:"Newbold, Wolfhampcote, Norton Junction and Napton."},
      {id:"wild",label:"Countryside nights",d:"Wednesday by All Oaks Wood, Friday in the fields below Braunston tunnel, Saturday at Roys bridge 87 between Barby and Braunston. Thursday at Wolfhampcote is already out in the fields.",patch:{1:{night:"All Oaks Corner"},3:{night:"Thrupp Covert Bridge No 7"},4:{night:"Roys Bridge No 87"}}}]}
  ]},
- C:{id:"C",name:"Route C",title:"South only: woods, locks and Napton",lede:"Straight south through Hillmorton: a countryside night near Barby, the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and Wolfhampcote. Needs a noon handover today, or use the 2 pm version.",
-  days:[D("12:00",0,[],"Roys Bridge No 87"),D("08:00",30,[],"Kayes Arm Junction"),D("07:30",30,[],"Napton Winding Hole"),D("08:00",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("08:00",30,[],"Wolfamcote Winding Hole"),D("08:00",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
+ C:{id:"C",name:"Route C",title:"South only: most ground",lede:"Made for a 2 pm handover. A short hop to turn at the Rugby arm, then south: a countryside night at Nethercote, the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and home. About 55 miles and 40 locks.",
+  days:[D("14:30",0,["Rugby Wharf Winding Hole"],"Rugby Visitor Moorings"),D("08:15",30,[],"Site of Nethercote Railway Bridge"),D("08:00",30,[],"Kayes Arm Junction"),D("08:00",45,[],"Napton Winding Hole"),D("07:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("07:10",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
   groups:[
    {id:"c1",day:0,q:"Tuesday: when do you get away?",opts:[
-     {id:"base",label:"About noon: through Hillmorton by 14:00",d:"First night in the fields at Roys bridge 87, between Barby and Braunston."},
-     {id:"two",label:"About 2 pm: a short hop north first",d:"Hillmorton will have closed. Up the Rugby arm to turn, night by Tesco; Wednesday south to Wolfhampcote. Drops the Leicester line.",patch:{0:{start:"14:15",via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},1:{start:"08:15",night:"Wolfamcote Winding Hole"},2:{start:"07:45",night:"Kayes Arm Junction"},3:{start:"07:30",via:[],night:"Napton Winding Hole"},4:{start:"08:00",via:[],night:"Norton Junction"},5:{start:"07:10"}}}]},
-   {id:"c2",day:0,q:"Tuesday night (noon handover)",opts:[
-     {id:"base",label:"Countryside at Roys bridge 87",d:"Quiet fields, no village."},
-     {id:"braun",label:"Braunston village",d:"Pubs and shops; you arrive close to dusk.",patch:{0:{night:"Braunston Visitor Moorings (London Road)"}}}]},
-   {id:"c3",day:4,q:"Saturday night",opts:[
-     {id:"base",label:"Wolfhampcote, in the fields",d:"Lost village and lone church; an easy Sunday home."},
-     {id:"napton",label:"Napton Hill again",d:"The Folly and the windmill view; a longer Sunday.",patch:{4:{night:"Napton Winding Hole"},5:{start:"07:15"}}}]},
+     {id:"base",label:"About 2 pm: a short hop first",d:"Hillmorton takes its last boat at 14:00, so today you turn at the Rugby arm and moor by Tesco. South from Wednesday."},
+     {id:"noon",label:"About noon: south today",d:"Through Hillmorton before 14:00, first night in the fields at Roys bridge 87, then Wolfhampcote on Saturday.",patch:{0:{start:"12:00",via:[],night:"Roys Bridge No 87"},1:{start:"08:00",night:"Kayes Arm Junction"},2:{start:"07:30",night:"Napton Winding Hole"},3:{start:"07:30",via:["Watford Pumping Station Winding Hole"],night:"Norton Junction"},4:{start:"08:00",via:[],night:"Wolfamcote Winding Hole"},5:{start:"08:00"}}}]},
+   {id:"c2",day:1,q:"Wednesday night",opts:[
+     {id:"base",label:"Nethercote, in the fields",d:"The quietest mooring on the network; rated excellent by Canalplan users."},
+     {id:"braun",label:"Braunston village",d:"Pubs, church and shops instead.",patch:{1:{night:"Braunston Visitor Moorings (London Road)"},2:{start:"07:45"}}}]},
+   {id:"c3",day:4,q:"Saturday after the tunnel",opts:[
+     {id:"base",label:"Leicester line to Watford and back",d:"About 4 extra miles of wooded, quiet water."},
+     {id:"skip",label:"Stop at Norton Junction",d:"A shorter day; walk to the New Inn.",patch:{4:{via:[]}}}]},
    {id:"c4",day:5,q:"Sunday",opts:[
      {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
      {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]}
