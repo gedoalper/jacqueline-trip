@@ -143,7 +143,7 @@ svg.i.s{width:17px;height:17px}
 .seg{display:flex;padding:3px;gap:2px;border-radius:12px;background:var(--surface-2)}
 .seg button{flex:1;min-height:36px;border:0;background:none;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-2);padding:0 8px}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.14)}
-.routepick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.routepick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .routepick button{text-align:left;border:1.5px solid transparent;border-radius:16px;background:var(--glass-2);padding:12px 14px;min-height:64px;display:grid;gap:3px;align-content:start}
 .routepick button b{font-size:16px;font-weight:700}
 .routepick button span{font-size:13px;color:var(--ink-2);line-height:17px}
@@ -236,7 +236,7 @@ details>summary::-webkit-details-marker{display:none}
 .daysrow .dn{font-weight:700;font-size:15px;line-height:1.15}
 .daysrow .tr{font-size:15px;line-height:20px;min-width:0}
 .daysrow .fg{font-size:13px;color:var(--ink-2);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .compare>button{background:var(--glass-2);padding:14px;min-width:0;border:1.5px solid transparent;border-radius:18px;text-align:left;display:grid;gap:4px;align-content:start}
 .compare b{font-size:17px;font-weight:700}
 .compare .k{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -491,7 +491,7 @@ const SUN = [[416,1005],[418,1003],[420,1001],[422,999],[424,997],[426,995],[428
 
 const NIGHTS = ["Clifton Wharf","Rugby Visitor Moorings","Newbold Visitor Moorings (48 hour)","All Oaks Visitor Moorings","Stretton Arm Winding Hole","Ansty Visitor Moorings","Hawkesbury Visitor Moorings (stop lock)","Hillmorton Visitor Moorings (below locks)","Hillmorton Visitor Moorings (above locks)","Navigation Bridge No 85","Braunston Visitor Moorings (London Road)","Braunston Visitor Moorings (marina end)","Braunston Top Lock Visitor Moorings","Welton Wharf","Norton Junction","Watford Pumping Station Winding Hole","Wolfamcote Winding Hole","Flecknoe Bridge No 102","Napton Winding Hole","Napton Bridge No 111","Calcutt Bottom Lock No 3","Birdingbury Bridge No 21","Kayes Arm Junction","Cuttle Bridge No 25","Bascote Bridge No 27","Radford Winding Hole"];
 
-/* Two full routes. Each variation is a choice inside one route; "patch" maps day index to changes. */
+/* Full routes. Each variation is a choice inside one route; "patch" maps day index to changes. */
 const D = (start,brk,via,night)=>({start,brk,via,night});
 const ROUTES = {
  A:{id:"A",name:"Route A",title:"Stockton flight and Napton",lede:"West to Hawkesbury and back, then the wide Calcutt and Stockton locks to the Long Itchington pubs, back up to Napton Hill.",
@@ -554,6 +554,22 @@ const ROUTES = {
      {id:"base",label:"Leicester line to Watford and back",d:"About 4 extra miles of wooded, quiet water."},
      {id:"skip",label:"Stop at Norton Junction",d:"A shorter day; walk to the New Inn.",patch:{4:{via:[]}}}]},
    {id:"c4",day:5,q:"Sunday",opts:[
+     {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
+     {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]}
+  ]},
+ D:{id:"D",name:"Route D",title:"A north morning, then south",lede:"Made for a 2 pm handover. Tuesday a short run north to Newbold. Wednesday an early start past All Oaks Wood to turn at the Stretton Arm, back through Hillmorton before 14:00 to the fields below Barby Hill. Then Route C's south: the Calcutt and Stockton locks to Long Itchington, Napton Hill, the Braunston flight and tunnel with the Leicester line, and home. Hawkesbury stays out of reach.",
+  days:[D("14:30",0,[],"Newbold Visitor Moorings (48 hour)"),D("07:00",20,["Stretton Arm Winding Hole"],"Roys Bridge No 87"),D("08:00",30,[],"Kayes Arm Junction"),D("08:00",45,[],"Napton Winding Hole"),D("07:30",30,["Watford Pumping Station Winding Hole"],"Norton Junction"),D("07:10",20,[],"Clifton Wharf"),D("08:45",0,[],"Clifton Wharf")],
+  groups:[
+   {id:"d1",day:1,q:"Wednesday in the north",opts:[
+     {id:"base",label:"Turn at the Stretton Arm",d:"Past Lime Farm and All Oaks Wood to Stretton Stop, then back. A long day: away at first light, through Hillmorton before 14:00."},
+     {id:"short",label:"Turn at the Rugby Wharf Arm only",d:"A gentle morning: Newbold tunnel and the Rugby arm, Hillmorton when it opens.",patch:{1:{start:"08:30",via:["Rugby Wharf Winding Hole"]}}}]},
+   {id:"d2",day:1,q:"Wednesday night",opts:[
+     {id:"base",label:"Fields below Barby Hill",d:"Roys bridge 87, quiet farmland before Braunston. Moors before dusk after a long day."},
+     {id:"braun",label:"Braunston village",d:"Pubs, church and shops. About half an hour further, so you arrive close to sunset.",patch:{1:{night:"Braunston Visitor Moorings (London Road)"},2:{start:"08:15"}}}]},
+   {id:"d3",day:4,q:"Saturday after the tunnel",opts:[
+     {id:"base",label:"Leicester line to Watford and back",d:"About 4 extra miles of wooded, quiet water."},
+     {id:"skip",label:"Stop at Norton Junction",d:"A shorter day; walk to the New Inn.",patch:{4:{via:[]}}}]},
+   {id:"d4",day:5,q:"Sunday",opts:[
      {id:"base",label:"Home to Clifton",d:"Through Hillmorton before 14:00."},
      {id:"rugby",label:"Home, then the Rugby Wharf Arm",d:"Last night at Rugby moorings by Tesco. Leave at 08:30 on Monday.",patch:{5:{via:["Rugby Wharf Winding Hole"],night:"Rugby Visitor Moorings"},6:{start:"08:30"}}}]}
   ]}
